@@ -12,6 +12,9 @@ YELLOW = (230,220,0)
 # Liste med alle fargene (uten hvit og svart)
 FARGER = [RED, GREEN, GREEN_DARK, BLUE, PURPLE, ORANGE, YELLOW]
 
+VINDU_BREDDE = 800
+VINDU_HOYDE = 600
+
 FPS = 60
 
 CELLE_STR = 20
