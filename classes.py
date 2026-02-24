@@ -8,8 +8,11 @@ class Menneske:
         
 
 class Spokelse:
-    def __init__(self) -> None:
+    def __init__(self,v:int) -> None:
         self.rect=pg.Rect(random.randint(0,VINDU_BREDDE),random.randint(0,VINDU_HOYDE),HINDRING_STR,HINDRING_STR)
+        self.v= v
+
+        
         
 
 
@@ -17,7 +20,8 @@ class Hindring:
     def __init__(self) -> None:
         self.farge = random.choice(FARGER)
         self.rect=pg.Rect(random.randint(0,VINDU_BREDDE),random.randint(0,VINDU_HOYDE),HINDRING_STR,HINDRING_STR)
-
+    def draw(self,vindu:pg.Surface):
+        pg.draw.rect(vindu,ORANGE,self.rect)
         
 
 
