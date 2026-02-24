@@ -18,7 +18,7 @@ class Spokelse:
     def __init__(self,v:int) -> None:
         self.rect=pg.Rect(random.randint(0,VINDU_BREDDE),random.randint(0,VINDU_HOYDE),HINDRING_STR,HINDRING_STR)
         self.v= v
-
+        self.img = IMAGE_DIR/"sprites/spøkelse.png"
         
         
 
