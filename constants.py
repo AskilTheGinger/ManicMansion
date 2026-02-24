@@ -1,3 +1,5 @@
+from pathlib import Path
+
 WHITE = (255, 255, 255)
 BLACK = (0,0,0)
 GREY = (170,170,170)
@@ -15,6 +17,7 @@ FARGER = [RED, GREEN, GREEN_DARK, BLUE, PURPLE, ORANGE, YELLOW]
 VINDU_BREDDE = 800
 VINDU_HOYDE = 600
 
+IMAGE_DIR = Path(__file__).parent
 FPS = 60
 
 MAX_BREDDE = 700
