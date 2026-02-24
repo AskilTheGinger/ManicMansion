@@ -5,21 +5,28 @@ from dataclasses import dataclass
 
 @dataclass(slots=True)
 class Objekt:
-    vx= int
-    vy=int
+    vx = int
+    vy = int
+    img = str
+    x = int
+    y = int
+
+
+    def draw(self, vindu:pg.Surface):
+        vindu.blit(self.img, (self.x, self.y))
     
 
 class Menneske(Objekt):
-    def __init__(self,hoyde:int,bredde:int) -> None:
-        self.rect = pg.Rect(hoyde,bredde,HINDRING_STR,HINDRING_STR)
+    def __init_subclass__(cls) -> None:
+        return super().__init_subclass__()
         
+        self.rect = pg.Rect(hoyde,bredde,HINDRING_STR,HINDRING_STR)
 
 class Spokelse:
     def __init__(self,v:int) -> None:
         self.rect=pg.Rect(random.randint(0,VINDU_BREDDE),random.randint(0,VINDU_HOYDE),HINDRING_STR,HINDRING_STR)
         self.v= v
         self.img = IMAGE_DIR/"sprites/spøkelse.png"
-        
         
 
 
