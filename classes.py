@@ -12,7 +12,7 @@ class Objekt:
 class Menneske(Objekt):
     def __init__(self,hoyde:int,bredde:int) -> None:
         self.rect = pg.Rect(hoyde,bredde,HINDRING_STR,HINDRING_STR)
-        
+
 
 class Spokelse:
     def __init__(self,v:int) -> None:
