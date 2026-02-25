@@ -20,7 +20,7 @@ class Menneske(Objekt):
     def __init__(self):
         img = pg.image.load(IMAGE_DIR / "sprites/spøkelse.png")
         x = 100
-        y = 100
+        y = VINDU_HOYDE//2
         super().__init__(0, 0, img, x, y)
         self.rect = self.img.get_rect(topleft=(x, y))
 

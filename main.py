@@ -1,10 +1,12 @@
 import pygame as pg
 from constants import *
+from classes import *
 
 pg.init()
 vindu = pg.display.set_mode([VINDU_BREDDE, VINDU_HOYDE])
 clock = pg.time.Clock()
 
+player = Menneske()
 
 def tegne_brett():
     fri_rect_venstre = pg.Rect(0,0,FRI_BREDDE,VINDU_HOYDE)
@@ -23,7 +25,7 @@ while running:
 
     vindu.fill(WHITE)
     tegne_brett()
-    
+    player.draw(vindu)
     pg.display.flip()
     clock.tick(FPS)
 
