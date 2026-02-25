@@ -1,5 +1,7 @@
 from pathlib import Path
 
+IMAGE_DIR = Path(__file__).parent
+
 WHITE = (255, 255, 255)
 BLACK = (0,0,0)
 GREY = (170,170,170)
@@ -14,14 +16,17 @@ YELLOW = (230,220,0)
 # Liste med alle fargene (uten hvit og svart)
 FARGER = [RED, GREEN, GREEN_DARK, BLUE, PURPLE, ORANGE, YELLOW]
 
-VINDU_BREDDE = 800
-VINDU_HOYDE = 600
+VINDU_BREDDE = 1500
+VINDU_HOYDE = 800
 
-IMAGE_DIR = Path(__file__).parent
 FPS = 60
 
 MAX_BREDDE = 700
-MIN_BREDDE=100
+MIN_BREDDE= 100
 HINDRING_STR = 30
+FRI_BREDDE = 300
 
+FRI_VENSTRE = FRI_BREDDE
+
+FRI_HOYRE = VINDU_BREDDE - FRI_BREDDE
 

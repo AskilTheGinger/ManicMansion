@@ -13,14 +13,15 @@ class Objekt:
 
 
     def draw(self, vindu:pg.Surface):
-        vindu.blit(self.img, (self.x, self.y))
+       # vindu.blit(self.img, (self.x, self.y))
+       pass
     
 
 class Menneske(Objekt):
     def __init_subclass__(cls) -> None:
         return super().__init_subclass__()
         
-        self.rect = pg.Rect(hoyde,bredde,HINDRING_STR,HINDRING_STR)
+        #self.rect = pg.Rect(hoyde,bredde,HINDRING_STR,HINDRING_STR)
 
 class Spokelse:
     def __init__(self,v:int) -> None:

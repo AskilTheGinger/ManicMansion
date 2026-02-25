@@ -6,6 +6,13 @@ vindu = pg.display.set_mode([VINDU_BREDDE, VINDU_HOYDE])
 clock = pg.time.Clock()
 
 
+def tegne_brett():
+    fri_rect_venstre = pg.Rect(0,0,FRI_BREDDE,VINDU_HOYDE)
+    fri_rect_hoyre = pg.Rect(FRI_HOYRE,0,FRI_BREDDE,VINDU_HOYDE)
+
+    pg.draw.rect(vindu, GREY, fri_rect_venstre)
+    pg.draw.rect(vindu, GREY, fri_rect_hoyre)
+
 running = True
 while running:
     for event in pg.event.get():
@@ -14,20 +21,11 @@ while running:
         elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
             running = False
 
-    # Tegn bakgrunn: (En slags "reset" av hele vinduet vårt)
     vindu.fill(WHITE)
-
-    # TODO: Oppdater objektene våre:
-
-
-    # Tegn objektene våre:
+    tegne_brett()
     
-
-
-    # Har alltid disse med til slutt:
     pg.display.flip()
     clock.tick(FPS)
 
 
-# While running er slutt: Avslutt pygame på en "ryddig måte":
 pg.quit()
