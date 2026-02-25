@@ -24,14 +24,14 @@ class Menneske(Objekt):
         super().__init__(0, 0, img, x, y)
         self.rect = self.img.get_rect(topleft=(x, y))
 
+
 class Spokelse(Objekt):
-    class Spokelse(Objekt):
-        def __init__(self):
-            x = random.randint(0, VINDU_BREDDE)
-            y = random.randint(0, VINDU_HOYDE)
-            img = pg.image.load(IMAGE_DIR / "sprites/spøkelse.png")
-            super().__init__(0, 0, img, x, y)
-            self.rect = self.img.get_rect(topleft=(x, y))
+    def __init__(self):
+        x = FRI_BREDDE + random.randint(0, VINDU_BREDDE-FRI_BREDDE)
+        y = random.randint(0, VINDU_HOYDE)
+        img = pg.image.load(IMAGE_DIR / "sprites/spøkelse.png")
+        super().__init__(0, 0, img, x, y)
+        self.rect = self.img.get_rect(topleft=(x, y))
         
 
 
