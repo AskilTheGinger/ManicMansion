@@ -56,7 +56,7 @@ class Hindring(Objekt):
     def __init__(self):
         self.vx=0
         self.vy=0
-        img = pg.image.load(IMAGE_DIR / "spøkelse.png")
+        img = pg.image.load(IMAGE_DIR / "stein.png")
         rect = img.get_rect(topleft=(200, 320))
         super().__init__(0, 0, img, rect)
 
