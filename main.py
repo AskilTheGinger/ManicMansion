@@ -1,5 +1,6 @@
 
 import pygame as pg
+
 from constants import *
 from classes import *
 
@@ -31,6 +32,7 @@ while running:
 
     vindu.fill(WHITE)
     tegne_brett()
+    player.move()
     player.draw(vindu)
     spøkelse1.oppdater()
     spøkelse1.draw(vindu)
