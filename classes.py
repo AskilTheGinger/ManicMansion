@@ -80,8 +80,11 @@ class Hindring(Objekt):
         self.vx=0
         self.vy=0
         img = pg.image.load(IMAGE_DIR / "stein.png")
-        rect = img.get_rect(topleft=(200, 320))
-        super().__init__(0, 0, img, rect)
+        scaled_img = pg.transform.scale_by(img, 0.3)
+        posisjon_x = random.randint(FRI_BREDDE, VINDU_BREDDE-FRI_BREDDE)
+        posisjon_y = random.randint(0, VINDU_HOYDE)
+        rect = img.get_rect(topleft=(posisjon_x, posisjon_y))
+        super().__init__(0, 0, scaled_img, rect)
 
 
 class Sau(Objekt):
