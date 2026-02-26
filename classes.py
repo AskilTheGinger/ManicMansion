@@ -8,51 +8,40 @@ class Objekt:
     vx: int
     vy: int
     img: pg.Surface
-    x: int
-    y: int
+    rect: pg.Rect
 
     def draw(self, vindu: pg.Surface):
-        vindu.blit(self.img, (self.x, self.y))
+        vindu.blit(self.img, self.rect)
        
-    
 
 class Menneske(Objekt):
     def __init__(self):
-        img = pg.image.load(IMAGE_DIR / "spøkelse.png")
-        x = 100
-        y = VINDU_HOYDE//2
-        super().__init__(0, 0, img, x, y)
-        self.rect = self.img.get_rect(topleft=(x, y))
+        img = pg.image.load(IMAGE_DIR / "menneske.png")
+        rect = img.get_rect(topleft=(100, VINDU_HOYDE // 2))
+        super().__init__(0, 0, img, rect)
 
 
 class Spokelse(Objekt):
     def __init__(self):
-        x = FRI_BREDDE + random.randint(0, VINDU_BREDDE-FRI_BREDDE)
+        x = FRI_BREDDE + random.randint(0, VINDU_BREDDE - FRI_BREDDE)
         y = random.randint(0, VINDU_HOYDE)
         img = pg.image.load(IMAGE_DIR / "spøkelse.png")
-        super().__init__(0, 0, img, x, y)
-        self.rect = self.img.get_rect(topleft=(x, y))
-        
+        rect = img.get_rect(topleft=(x, y))
+        super().__init__(0, 0, img, rect)
 
 
 class Hindring(Objekt):
-    def __init__(self) -> None:
+    def __init__(self):
         img = pg.image.load(IMAGE_DIR / "spøkelse.png")
-        x = 200
-        y = 320
-        super().__init__(0, 0, img, x, y)    
-
-        
+        rect = img.get_rect(topleft=(200, 320))
+        super().__init__(0, 0, img, rect)
 
 
 class Sau(Objekt):
     def __init__(self):
-        super().__init__(
-            vx = 0,
-            vy = 0,
-            img = pg.image.load("sau.png"),
-            x = random.randint(0, VINDU_BREDDE),
-            y = random.randint(0, VINDU_HOYDE)
-        )
-        
-
+        img = pg.image.load("sau.png")
+        rect = img.get_rect(topleft=(
+            random.randint(0, VINDU_BREDDE),
+            random.randint(0, VINDU_HOYDE)
+        ))
+        super().__init__(0, 0, img, rect)
