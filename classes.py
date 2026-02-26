@@ -36,6 +36,15 @@ class Menneske(Objekt):
             self.rect.x -= speed
         if keys[pg.K_d]:
             self.rect.x += speed
+    def collide(self, hindring:Objekt):
+        if self.rect.colliderect(hindring.rect):
+            self.rect.left-=self.vx
+            self.rect.top-=self.vy
+
+        
+        
+
+
     
 
         
@@ -47,8 +56,8 @@ class Spokelse(Objekt):
     def __init__(self):
         x = FRI_BREDDE + random.randint(0, VINDU_BREDDE - FRI_BREDDE*2)
         y = random.randint(0, VINDU_HOYDE-80)
-        vx = -10
-        vy=10
+        vx = -4
+        vy=4
         img = pg.image.load(IMAGE_DIR / "spøkelse.png")
         nytt_img = pg.transform.scale_by(img, 0.5)
         rect = img.get_rect(topleft=(x, y))
@@ -65,7 +74,7 @@ class Spokelse(Objekt):
         
     
 
-
+@dataclass (slots=True)
 class Hindring(Objekt):
     def __init__(self):
         self.vx=0
