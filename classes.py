@@ -9,12 +9,14 @@ class Objekt:
     vy: int
     img: pg.Surface
     rect: pg.Rect
-
-    def draw(self, vindu: pg.Surface):
-        vindu.blit(self.img, self.rect)
+    
     def oppdater(self):
         self.rect.left+=self.vx
         self.rect.top+=self.vy
+
+    def draw(self, vindu: pg.Surface):
+        vindu.blit(self.img, self.rect)
+        
        
 
 class Menneske(Objekt):
@@ -61,7 +63,7 @@ class Hindring(Objekt):
 
 class Sau(Objekt):
     def __init__(self):
-        img = pg.image.load("sau.png")
+        img = pg.image.load("spøkelse.png")
         rect = img.get_rect(topleft=(
             random.randint(0, VINDU_BREDDE),
             random.randint(0, VINDU_HOYDE)
