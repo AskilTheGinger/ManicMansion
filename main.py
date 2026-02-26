@@ -24,6 +24,9 @@ while running:
             running = False
         elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
             running = False
+        elif event.type == pg.KEYDOWN and event.key == pg.K_w:
+            player.vy=-10
+        
 
     vindu.fill(WHITE)
     tegne_brett()

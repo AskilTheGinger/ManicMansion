@@ -19,9 +19,12 @@ class Objekt:
 
 class Menneske(Objekt):
     def __init__(self):
-        img = pg.image.load(IMAGE_DIR / "menneske.png")
+        img = pg.image.load(IMAGE_DIR / "spøkelse.png")
         rect = img.get_rect(topleft=(100, VINDU_HOYDE // 2))
         super().__init__(0, 0, img, rect)
+
+        
+        
     
 
 
@@ -29,17 +32,21 @@ class Spokelse(Objekt):
     def __init__(self):
         x = FRI_BREDDE + random.randint(0, VINDU_BREDDE - FRI_BREDDE*2)
         y = random.randint(0, VINDU_HOYDE)
-        self.vx=10
-        self.vy=10
+        vx = -10
+        vy=10
         img = pg.image.load(IMAGE_DIR / "spøkelse.png")
         rect = img.get_rect(topleft=(x, y))
-        super().__init__(0, 0, img, rect)
+        super().__init__(vx, vy, img, rect)
     
     def oppdater(self):
-        if FRI_BREDDE>=self.rect.left<=(VINDU_BREDDE-FRI_BREDDE):
+        super().oppdater()
+        
+        if FRI_BREDDE>=self.rect.left or self.rect.left>=(VINDU_BREDDE-FRI_BREDDE-self.rect.width):
             self.vx*=-1
+        if 0>=self.rect.top or self.rect.top>=(VINDU_HOYDE-self.rect.height):
+            self.vy*=-1
 
-        return super().oppdater()
+        
     
 
 
