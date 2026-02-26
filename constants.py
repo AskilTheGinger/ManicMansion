@@ -1,6 +1,6 @@
 from pathlib import Path
 
-IMAGE_DIR = Path(__file__).parent
+IMAGE_DIR = Path(__file__).parent / "sprites"
 
 WHITE = (255, 255, 255)
 BLACK = (0,0,0)

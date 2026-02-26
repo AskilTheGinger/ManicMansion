@@ -18,7 +18,7 @@ class Objekt:
 
 class Menneske(Objekt):
     def __init__(self):
-        img = pg.image.load(IMAGE_DIR / "sprites/spøkelse.png")
+        img = pg.image.load(IMAGE_DIR / "spøkelse.png")
         x = 100
         y = VINDU_HOYDE//2
         super().__init__(0, 0, img, x, y)
@@ -29,7 +29,7 @@ class Spokelse(Objekt):
     def __init__(self):
         x = FRI_BREDDE + random.randint(0, VINDU_BREDDE-FRI_BREDDE)
         y = random.randint(0, VINDU_HOYDE)
-        img = pg.image.load(IMAGE_DIR / "sprites/spøkelse.png")
+        img = pg.image.load(IMAGE_DIR / "spøkelse.png")
         super().__init__(0, 0, img, x, y)
         self.rect = self.img.get_rect(topleft=(x, y))
         
@@ -37,7 +37,7 @@ class Spokelse(Objekt):
 
 class Hindring(Objekt):
     def __init__(self) -> None:
-        img = pg.image.load(IMAGE_DIR / "sprites/spøkelse.png")
+        img = pg.image.load(IMAGE_DIR / "spøkelse.png")
         x = 200
         y = 320
         super().__init__(0, 0, img, x, y)    
