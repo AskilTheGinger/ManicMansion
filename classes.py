@@ -37,7 +37,7 @@ class Spokelse(Objekt):
         vx = -10
         vy=10
         img = pg.image.load(IMAGE_DIR / "spøkelse.png")
-        scaled_image = pygame.transform.scale(img, (100, 200))
+        scaled_image = pygame.transform.scale_by(img, 0.5)
         rect = img.get_rect(topleft=(x, y))
         super().__init__(vx, vy, scaled_image, rect)
     
