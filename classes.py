@@ -24,6 +24,19 @@ class Menneske(Objekt):
         img = pg.image.load(IMAGE_DIR / "spøkelse.png")
         rect = img.get_rect(topleft=(100, VINDU_HOYDE // 2))
         super().__init__(0, 0, img, rect)
+    def move(self):
+        speed=5
+        keys = pg.key.get_pressed()
+
+        if keys[pg.K_w]:
+            self.rect.y -= speed
+        if keys[pg.K_s]:
+            self.rect.y += speed
+        if keys[pg.K_a]:
+            self.rect.x -= speed
+        if keys[pg.K_d]:
+            self.rect.x += speed
+    
 
         
         
@@ -33,7 +46,7 @@ class Menneske(Objekt):
 class Spokelse(Objekt):
     def __init__(self):
         x = FRI_BREDDE + random.randint(0, VINDU_BREDDE - FRI_BREDDE*2)
-        y = random.randint(0, VINDU_HOYDE)
+        y = random.randint(0, VINDU_HOYDE-80)
         vx = -10
         vy=10
         img = pg.image.load(IMAGE_DIR / "spøkelse.png")
