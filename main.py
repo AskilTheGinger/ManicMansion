@@ -11,6 +11,10 @@ clock = pg.time.Clock()
 player = Menneske()
 spøkelse1 = Spokelse()
 
+hindringer:list[Hindring] = []
+
+for _ in range(3):
+    hindringer.append(Hindring())
 
 def tegne_brett():
     fri_rect_venstre = pg.Rect(0,0,FRI_BREDDE,VINDU_HOYDE)
@@ -31,11 +35,17 @@ while running:
         
 
     vindu.fill(WHITE)
+    for hindring in hindringer:
+        hindring.draw(vindu)
+    
     tegne_brett()
     player.move()
     player.draw(vindu)
     spøkelse1.oppdater()
     spøkelse1.draw(vindu)
+
+    
+
     pg.display.flip()
     clock.tick(FPS)
 
