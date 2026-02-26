@@ -37,8 +37,9 @@ class Spokelse(Objekt):
         vx = -10
         vy=10
         img = pg.image.load(IMAGE_DIR / "spøkelse.png")
+        scaled_image = pygame.transform.scale(img, (100, 200))
         rect = img.get_rect(topleft=(x, y))
-        super().__init__(vx, vy, img, rect)
+        super().__init__(vx, vy, scaled_image, rect)
     
     def oppdater(self):
         super().oppdater()
