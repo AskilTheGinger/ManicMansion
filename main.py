@@ -28,6 +28,7 @@ while running:
     vindu.fill(WHITE)
     tegne_brett()
     player.draw(vindu)
+    spøkelse1.oppdater()
     spøkelse1.draw(vindu)
     pg.display.flip()
     clock.tick(FPS)
