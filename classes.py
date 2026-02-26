@@ -9,12 +9,14 @@ class Objekt:
     vy: int
     img: pg.Surface
     rect: pg.Rect
-
-    def draw(self, vindu: pg.Surface):
-        vindu.blit(self.img, self.rect)
+    
     def oppdater(self):
         self.rect.left+=self.vx
         self.rect.top+=self.vy
+
+    def draw(self, vindu: pg.Surface):
+        vindu.blit(self.img, self.rect)
+        
        
 
 class Menneske(Objekt):
