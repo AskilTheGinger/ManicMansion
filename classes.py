@@ -29,13 +29,13 @@ class Menneske(Objekt):
         speed=5
         keys = pg.key.get_pressed()
 
-        if keys[pg.K_w]:
+        if keys[pg.K_w] and self.rect.y > 0:
             self.rect.y -= speed
-        if keys[pg.K_s]:
+        if keys[pg.K_s] and self.rect.y < VINDU_HOYDE - self.rect.height:
             self.rect.y += speed
-        if keys[pg.K_a]:
+        if keys[pg.K_a] and self.rect.x > 0:
             self.rect.x -= speed
-        if keys[pg.K_d]:
+        if keys[pg.K_d] and self.rect.x < VINDU_BREDDE - self.rect.width:
             self.rect.x += speed
     def collide(self, x:int, y:int):
         self.rect.x = x
@@ -43,12 +43,12 @@ class Menneske(Objekt):
 
 class Spokelse(Objekt):
     def __init__(self):
-        x = FRI_BREDDE + random.randint(0, VINDU_BREDDE - FRI_BREDDE*2)
+        img = pg.image.load(IMAGE_DIR / "spøkelse.png")
+        scaled_img = pg.transform.scale_by(img, 0.5)
+        x = FRI_BREDDE + random.randint(0, VINDU_BREDDE - FRI_BREDDE-scaled_img.get_width())
         y = random.randint(0, VINDU_HOYDE-80)
         vx = -4
         vy=4
-        img = pg.image.load(IMAGE_DIR / "spøkelse.png")
-        scaled_img = pg.transform.scale_by(img, 0.5)
         rect = scaled_img.get_rect(topleft=(x, y))
         super().__init__(vx, vy, scaled_img, rect)
     
@@ -75,6 +75,6 @@ class Sau(Objekt):
         img = pg.image.load(IMAGE_DIR / "sau/west.png")
         scaled_img = pg.transform.scale_by(img, 2)
         rect = scaled_img.get_rect(topleft=(
-            random.randint(VINDU_BREDDE-FRI_BREDDE,VINDU_BREDDE),
-            random.randint(0, VINDU_HOYDE)))
+            random.randint(VINDU_BREDDE-FRI_BREDDE,VINDU_BREDDE-scaled_img.get_width()),
+            random.randint(0, VINDU_HOYDE-scaled_img.get_height())))
         super().__init__(0, 0, scaled_img, rect)

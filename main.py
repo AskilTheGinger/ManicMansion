@@ -53,6 +53,7 @@ while running:
         if player.rect.colliderect(hindring.rect):
             player.collide(x1, y1)
     
+    
     player.draw(vindu)
     spøkelse1.oppdater()
     spøkelse1.draw(vindu)
