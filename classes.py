@@ -41,15 +41,6 @@ class Menneske(Objekt):
             self.rect.left-=self.vx
             self.rect.top-=self.vy
 
-        
-        
-
-
-    
-
-        
-        
-    
 
 
 class Spokelse(Objekt):
@@ -71,10 +62,6 @@ class Spokelse(Objekt):
         if 0>=self.rect.top or self.rect.top>=(VINDU_HOYDE-self.rect.height):
             self.vy*=-1
 
-        
-    
-
-@dataclass (slots=True)
 class Hindring(Objekt):
     def __init__(self):
         self.vx=0
