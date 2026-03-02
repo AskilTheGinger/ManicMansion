@@ -10,7 +10,7 @@ font = pg.font.SysFont(None, 48)
 
 player = Menneske()
 spøkelse1 = Spokelse()
-poeng = 0
+
 
 hindringer:list[Hindring] = []
 sauer:list[Sau] = []
@@ -21,8 +21,8 @@ for _ in range(3):
 for _ in range(3):
     sauer.append(Sau())
 
-def tegne_brett(poeng:int):
-    poengtekst = font.render(f"Poeng: {poeng}", True, BLACK)
+def tegne_brett():
+    poengtekst = font.render(f"Poeng: {player.poeng}", True, BLACK)
     fri_rect_venstre = pg.Rect(0,0,FRI_BREDDE,VINDU_HOYDE)
     fri_rect_hoyre = pg.Rect(FRI_HOYRE,0,FRI_BREDDE,VINDU_HOYDE)
 
@@ -33,13 +33,12 @@ def tegne_brett(poeng:int):
     vindu.blit(poengtekst, poengtekst_rect)
 
 def game_loop(x1:int, y1:int):
-    tegne_brett(poeng)
+    tegne_brett()
 
     for hindring in hindringer:
         hindring.draw(vindu)
     
-    for sau in sauer:
-        sau.draw(vindu)
+    
         
     player.move()
 
@@ -50,7 +49,14 @@ def game_loop(x1:int, y1:int):
     spøkelse1.oppdater()
     if spøkelse1.rect.colliderect(player.rect):
         return False
+    
+    for sau in sauer:
+        if player.plukke_sau(sau):
+            sauer.remove(sau)
 
+    player.faa_poeng()
+    for sau in sauer:
+            sau.draw(vindu)
     player.draw(vindu)
     spøkelse1.draw(vindu)
     return True
@@ -72,7 +78,7 @@ while running:
     if game_active:
         game_active = game_loop(x1, y1)
     else:
-        poengtekst = font.render(f"Du fikk: {poeng} poeng", True, BLACK)
+        poengtekst = font.render(f"Du fikk: {player.poeng} poeng", True, BLACK)
         poengtekst_rect = poengtekst.get_rect()
         poengtekst_rect.center = (VINDU_BREDDE//2, VINDU_HOYDE//2) 
         vindu.blit(poengtekst, poengtekst_rect)

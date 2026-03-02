@@ -19,11 +19,23 @@ class Objekt:
         
        
 
+class Sau(Objekt):
+    def __init__(self):
+        img = pg.image.load(IMAGE_DIR / "sau/west.png")
+        scaled_img = pg.transform.scale_by(img, 2)
+        rect = scaled_img.get_rect(topleft=(
+            random.randint(VINDU_BREDDE-FRI_BREDDE,VINDU_BREDDE-scaled_img.get_width()),
+            random.randint(0, VINDU_HOYDE-scaled_img.get_height())))
+        super().__init__(0, 0, scaled_img, rect)
+
+
 class Menneske(Objekt):
     def __init__(self):
         img = pg.image.load(IMAGE_DIR / "karakter/south.png")
         scaled_img = pg.transform.scale_by(img, 2.7)
         rect = scaled_img.get_rect(topleft=(100, VINDU_HOYDE // 2))
+        self.bærer_sau = False
+        self.poeng = 0
         super().__init__(0, 0, scaled_img, rect)
     def move(self):
         speed=5
@@ -37,9 +49,21 @@ class Menneske(Objekt):
             self.rect.x -= speed
         if keys[pg.K_d] and self.rect.x < VINDU_BREDDE - self.rect.width:
             self.rect.x += speed
+
     def collide(self, x:int, y:int):
         self.rect.x = x
         self.rect.y = y
+
+    def plukke_sau(self, sau:Sau):
+        if self.rect.colliderect(sau.rect) and self.bærer_sau == False:
+            self.bærer_sau = True
+            return True
+        return False
+    
+    def faa_poeng(self):
+        if self.bærer_sau == True and self.rect.right < FRI_BREDDE:
+            self.poeng += 1
+            self.bærer_sau = False
 
 class Spokelse(Objekt):
     def __init__(self):
@@ -48,7 +72,7 @@ class Spokelse(Objekt):
         x = FRI_BREDDE + random.randint(0, VINDU_BREDDE - (FRI_BREDDE*2)-scaled_img.get_width())
         y = random.randint(0, VINDU_HOYDE-80)
         vx = -4
-        vy=4
+        vy = 4
         rect = scaled_img.get_rect(topleft=(x, y))
         super().__init__(vx, vy, scaled_img, rect)
     
@@ -67,14 +91,4 @@ class Hindring(Objekt):
         posisjon_x = random.randint(FRI_BREDDE, VINDU_BREDDE-FRI_BREDDE-scaled_img.get_width())
         posisjon_y = random.randint(0, VINDU_HOYDE-scaled_img.get_height())
         rect = scaled_img.get_rect(topleft=(posisjon_x, posisjon_y))
-        super().__init__(0, 0, scaled_img, rect)
-
-
-class Sau(Objekt):
-    def __init__(self):
-        img = pg.image.load(IMAGE_DIR / "sau/west.png")
-        scaled_img = pg.transform.scale_by(img, 2)
-        rect = scaled_img.get_rect(topleft=(
-            random.randint(VINDU_BREDDE-FRI_BREDDE,VINDU_BREDDE-scaled_img.get_width()),
-            random.randint(0, VINDU_HOYDE-scaled_img.get_height())))
         super().__init__(0, 0, scaled_img, rect)
