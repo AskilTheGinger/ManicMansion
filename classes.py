@@ -25,32 +25,41 @@ class Menneske(Objekt):
         img = pg.image.load(IMAGE_DIR / "spøkelse.png")
         rect = img.get_rect(topleft=(100, VINDU_HOYDE // 2))
         super().__init__(0, 0, img, rect)
+        self.yretning:int=0
+        self.xretning:int=0
+        self.harSau:bool=False
     def move(self):
         speed=5
         keys = pg.key.get_pressed()
 
         if keys[pg.K_w]:
-            self.rect.y -= speed
+            self.vy =- speed
         if keys[pg.K_s]:
-            self.rect.y += speed
+            self.vy= speed
         if keys[pg.K_a]:
-            self.rect.x -= speed
+            self.vx= -speed
         if keys[pg.K_d]:
-            self.rect.x += speed
+            self.vx= speed
+    def oppdater(self):
+        super().oppdater()
+        self.vx=0
+        self.vy=0
     def collide(self, hindring:Objekt):
         if self.rect.colliderect(hindring.rect):
-            self.rect.left-=self.vx
-            self.rect.top-=self.vy
+            if type(hindring)==Hindring:
 
-        
-        
-
-
-    
-
-        
-        
-    
+                if self.vy:
+                    self.yretning:int= int(self.vy/(abs(self.vy)))
+                
+                if self.vx:
+                    self.xretning:int= int(self.vx/(abs(self.vx)))
+                
+                self.rect.x-=self.xretning*5
+                self.rect.y-=self.yretning*5
+                self.vx=0
+                self.vy=0
+            if type(hindring)==Sau:
+                self.harSau=True
 
 
 class Spokelse(Objekt):
@@ -76,8 +85,8 @@ class Spokelse(Objekt):
                 #finner vinkelen slik at den randomiserte farten ikke er vendt tilbake mot boksen
                 angle = (atan2(((hindring.rect.centery-self.rect.centery)),(self.rect.centerx-hindring.rect.centerx))//(pi/2))-1
                 #booter den ut av hindringen
-                self.x=hindring.rect.centerx+(hindring.rect.width/2)*cos(angle*pi)
-                self.y=hindring.rect.centery-(hindring.rect.height/2)*sin(angle*pi)
+                self.x=hindring.rect.centerx+((hindring.rect.width/2)*cos(angle*pi))*1.1
+                self.y=hindring.rect.centery-((hindring.rect.height/2)*sin(angle*pi))*1.1
                 #lager en tilfeldig vinkel som er vekk fra objektet
                 ranAngle=random.uniform(-pi/2+(angle*pi),pi/2+angle*pi)
                 self.vx=speed*cos(ranAngle)
@@ -122,3 +131,5 @@ class Sau(Objekt):
             random.randint(0, VINDU_HOYDE)
         ))
         super().__init__(0, 0, img, rect)
+    
+            
