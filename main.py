@@ -27,20 +27,9 @@ def tegne_brett():
     pg.draw.rect(vindu, GREY, fri_rect_venstre)
     pg.draw.rect(vindu, GREY, fri_rect_hoyre)
 
-
-running = True
-while running:
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
-            running = False
-        elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
-            running = False
-    
-    x1, y1 = player.rect.x, player.rect.y
-
-    vindu.fill(WHITE)
+def game_loop(x1:int, y1:int):
     tegne_brett()
-    
+
     for hindring in hindringer:
         hindring.draw(vindu)
     
@@ -53,12 +42,32 @@ while running:
         if player.rect.colliderect(hindring.rect):
             player.collide(x1, y1)
     
-    
-    player.draw(vindu)
     spøkelse1.oppdater()
-    spøkelse1.draw(vindu)
+    if spøkelse1.rect.colliderect(player.rect):
+        return False
 
+    player.draw(vindu)
+    spøkelse1.draw(vindu)
+    return True
+
+running = True
+game_active = True
+
+while running:
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            running = False
+        elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+            running = False
     
+    x1, y1 = player.rect.x, player.rect.y
+
+    vindu.fill(WHITE)
+    
+    if game_active:
+        game_active = game_loop(x1, y1)
+    else:
+        pass
 
     pg.display.flip()
     clock.tick(FPS)
