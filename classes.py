@@ -23,7 +23,7 @@ class Menneske(Objekt):
     def __init__(self):
         img = pg.image.load(IMAGE_DIR / "karakter/south.png")
         scaled_img = pg.transform.scale_by(img, 2.7)
-        rect = img.get_rect(topleft=(100, VINDU_HOYDE // 2))
+        rect = scaled_img.get_rect(topleft=(100, VINDU_HOYDE // 2))
         super().__init__(0, 0, scaled_img, rect)
     def move(self):
         speed=5
@@ -37,12 +37,10 @@ class Menneske(Objekt):
             self.rect.x -= speed
         if keys[pg.K_d]:
             self.rect.x += speed
-    def collide(self, hindring:Objekt):
-        if self.rect.colliderect(hindring.rect):
-            
-            self.rect.left = self.rect.left
-            self.rect.top = self.rect.top
-            print("kolisjon")
+    def collide(self, x:int, y:int):
+        self.rect.x = x
+        self.rect.y = y
+
 
 
 class Spokelse(Objekt):
@@ -53,7 +51,7 @@ class Spokelse(Objekt):
         vy=4
         img = pg.image.load(IMAGE_DIR / "spøkelse.png")
         scaled_img = pg.transform.scale_by(img, 0.5)
-        rect = img.get_rect(topleft=(x, y))
+        rect = scaled_img.get_rect(topleft=(x, y))
         super().__init__(vx, vy, scaled_img, rect)
     
     def oppdater(self):
@@ -66,21 +64,20 @@ class Spokelse(Objekt):
 
 class Hindring(Objekt):
     def __init__(self):
-        self.vx=0
-        self.vy=0
         img = pg.image.load(IMAGE_DIR / "stein.png")
         scaled_img = pg.transform.scale_by(img, 0.3)
         posisjon_x = random.randint(FRI_BREDDE, VINDU_BREDDE-FRI_BREDDE)
         posisjon_y = random.randint(0, VINDU_HOYDE)
-        rect = img.get_rect(topleft=(posisjon_x, posisjon_y))
+        rect = scaled_img.get_rect(topleft=(posisjon_x, posisjon_y))
         super().__init__(0, 0, scaled_img, rect)
 
 
 class Sau(Objekt):
     def __init__(self):
-        img = pg.image.load("spøkelse.png")
-        rect = img.get_rect(topleft=(
+        img = pg.image.load(IMAGE_DIR / "spøkelse.png")
+        scaled_img = pg.transform.scale_by(img, 0.5)
+        rect = scaled_img.get_rect(topleft=(
             random.randint(0, VINDU_BREDDE),
             random.randint(0, VINDU_HOYDE)
         ))
-        super().__init__(0, 0, img, rect)
+        super().__init__(0, 0, scaled_img, rect)

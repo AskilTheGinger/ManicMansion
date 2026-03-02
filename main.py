@@ -31,19 +31,21 @@ while running:
             running = False
         elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
             running = False
-        elif event.type == pg.KEYDOWN and event.key == pg.K_w:
-            player.vy=-10
         
+    
+    x1, y1 = player.rect.x, player.rect.y
 
     vindu.fill(WHITE)
     for hindring in hindringer:
         hindring.draw(vindu)
         
+    player.move()
+
     for hindring in hindringer:
-        player.collide(hindring)
+        if player.rect.colliderect(hindring.rect):
+            player.collide(x1, y1)
     
     tegne_brett()
-    player.move()
     player.draw(vindu)
     spøkelse1.oppdater()
     spøkelse1.draw(vindu)
