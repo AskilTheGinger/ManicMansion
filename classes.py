@@ -21,9 +21,10 @@ class Objekt:
 
 class Menneske(Objekt):
     def __init__(self):
-        img = pg.image.load(IMAGE_DIR / "spøkelse.png")
+        img = pg.image.load(IMAGE_DIR / "karakter/south.png")
+        scaled_img = pg.transform.scale_by(img, 2.7)
         rect = img.get_rect(topleft=(100, VINDU_HOYDE // 2))
-        super().__init__(0, 0, img, rect)
+        super().__init__(0, 0, scaled_img, rect)
     def move(self):
         speed=5
         keys = pg.key.get_pressed()
@@ -38,9 +39,10 @@ class Menneske(Objekt):
             self.rect.x += speed
     def collide(self, hindring:Objekt):
         if self.rect.colliderect(hindring.rect):
-            self.rect.left-=self.vx
-            self.rect.top-=self.vy
-
+            
+            self.rect.left = self.rect.left
+            self.rect.top = self.rect.top
+            print("kolisjon")
 
 
 class Spokelse(Objekt):
@@ -50,9 +52,9 @@ class Spokelse(Objekt):
         vx = -4
         vy=4
         img = pg.image.load(IMAGE_DIR / "spøkelse.png")
-        nytt_img = pg.transform.scale_by(img, 0.5)
+        scaled_img = pg.transform.scale_by(img, 0.5)
         rect = img.get_rect(topleft=(x, y))
-        super().__init__(vx, vy, nytt_img, rect)
+        super().__init__(vx, vy, scaled_img, rect)
     
     def oppdater(self):
         super().oppdater()

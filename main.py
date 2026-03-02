@@ -23,6 +23,7 @@ def tegne_brett():
     pg.draw.rect(vindu, GREY, fri_rect_venstre)
     pg.draw.rect(vindu, GREY, fri_rect_hoyre)
 
+
 running = True
 while running:
     for event in pg.event.get():
@@ -37,6 +38,7 @@ while running:
     vindu.fill(WHITE)
     for hindring in hindringer:
         hindring.draw(vindu)
+        player.collide(hindring)
     
     tegne_brett()
     player.move()
