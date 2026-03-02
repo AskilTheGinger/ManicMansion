@@ -45,7 +45,7 @@ class Spokelse(Objekt):
     def __init__(self):
         img = pg.image.load(IMAGE_DIR / "spøkelse.png")
         scaled_img = pg.transform.scale_by(img, 0.5)
-        x = FRI_BREDDE + random.randint(0, VINDU_BREDDE - FRI_BREDDE-scaled_img.get_width())
+        x = FRI_BREDDE + random.randint(0, VINDU_BREDDE - (FRI_BREDDE*2)-scaled_img.get_width())
         y = random.randint(0, VINDU_HOYDE-80)
         vx = -4
         vy=4
@@ -57,7 +57,7 @@ class Spokelse(Objekt):
         
         if FRI_BREDDE>=self.rect.left or self.rect.left>=(VINDU_BREDDE-FRI_BREDDE-self.rect.width):
             self.vx*=-1
-        if 0>=self.rect.top or self.rect.top>=(VINDU_HOYDE-self.rect.height):
+        if 0 >= self.rect.top or self.rect.top>=(VINDU_HOYDE-self.rect.height):
             self.vy*=-1
 
 class Hindring(Objekt):
