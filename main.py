@@ -96,19 +96,7 @@ while running:
     x1, y1 = player.rect.x, player.rect.y
 
     vindu.fill(WHITE)
-    
-    player.move()
-    for hindring in hindringer:
-
-        
-        player.collide(hindring)
-    
-    tegne_brett()
-    
-    
-    
-
-    
+ 
     if game_active:
         game_active = game_loop(x1, y1)
     else:
