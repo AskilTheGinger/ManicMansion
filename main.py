@@ -37,10 +37,12 @@ while running:
     vindu.fill(WHITE)
     for hindring in hindringer:
         hindring.draw(vindu)
+        spøkelse1.collide(hindring)
     
     tegne_brett()
     player.move()
     player.draw(vindu)
+    
     spøkelse1.oppdater()
     spøkelse1.draw(vindu)
 

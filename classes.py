@@ -2,6 +2,7 @@ from constants import *
 import pygame as pg
 import random as random
 from dataclasses import dataclass
+from math import sin, cos, atan2, pi
 
 @dataclass(slots=True)
 class Objekt:
@@ -61,7 +62,31 @@ class Spokelse(Objekt):
         img = pg.image.load(IMAGE_DIR / "spøkelse.png")
         nytt_img = pg.transform.scale_by(img, 0.5)
         rect = img.get_rect(topleft=(x, y))
+        #skalerer det ned slik at den ikke er større enn spriten
+        rect.width= int(round(rect.width/2))
+        rect.height =int(round(rect.height/2))
         super().__init__(vx, vy, nytt_img, rect)
+    
+    def collide(self, hindring:Objekt):
+        if self.rect.colliderect(hindring.rect):
+            if type(hindring)==Menneske:
+                return True
+            elif type(hindring)==Hindring:
+                speed=(self.vx**2+self.vy**2)**(1/2)
+                #finner vinkelen slik at den randomiserte farten ikke er vendt tilbake mot boksen
+                angle = (atan2(((hindring.rect.centery-self.rect.centery)),(self.rect.centerx-hindring.rect.centerx))//(pi/2))-1
+                #booter den ut av hindringen
+                self.x=hindring.rect.centerx+(hindring.rect.width/2)*cos(angle*pi)
+                self.y=hindring.rect.centery-(hindring.rect.height/2)*sin(angle*pi)
+                #lager en tilfeldig vinkel som er vekk fra objektet
+                ranAngle=random.uniform(-pi/2+(angle*pi),pi/2+angle*pi)
+                self.vx=speed*cos(ranAngle)
+                self.vy=speed*sin(ranAngle)
+
+                
+
+                
+                
     
     def oppdater(self):
         super().oppdater()
@@ -74,7 +99,6 @@ class Spokelse(Objekt):
         
     
 
-@dataclass (slots=True)
 class Hindring(Objekt):
     def __init__(self):
         self.vx=0
@@ -84,6 +108,9 @@ class Hindring(Objekt):
         posisjon_x = random.randint(FRI_BREDDE, VINDU_BREDDE-FRI_BREDDE)
         posisjon_y = random.randint(0, VINDU_HOYDE)
         rect = img.get_rect(topleft=(posisjon_x, posisjon_y))
+          #skalerer det ned slik at den ikke er større enn spriten
+        rect.width= int(round(rect.width*0.3))
+        rect.height =int(round(rect.height*0.3))
         super().__init__(0, 0, scaled_img, rect)
 
 
