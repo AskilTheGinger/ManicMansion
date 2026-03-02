@@ -26,7 +26,11 @@ class Sau(Objekt):
         rect = scaled_img.get_rect(topleft=(
             random.randint(VINDU_BREDDE-FRI_BREDDE,VINDU_BREDDE-scaled_img.get_width()),
             random.randint(0, VINDU_HOYDE-scaled_img.get_height())))
+        self.blir_dratt = False
         super().__init__(0, 0, scaled_img, rect)
+    def folge(self, x:int, y:int):
+        if self.blir_dratt == True:
+            self.rect.center = x + 50, y 
 
 
 class Menneske(Objekt):
@@ -35,9 +39,11 @@ class Menneske(Objekt):
         scaled_img = pg.transform.scale_by(img, 2.7)
         rect = scaled_img.get_rect(topleft=(100, VINDU_HOYDE // 2))
         self.bærer_sau = False
+        self.carried_sau: Sau | None = None
         self.poeng = 0
         self.fart = 5
         super().__init__(0, 0, scaled_img, rect)
+
     def move(self):
         keys = pg.key.get_pressed()
         if self.bærer_sau:
@@ -66,15 +72,20 @@ class Menneske(Objekt):
         self.rect.y = y
 
     def plukke_sau(self, sau:Sau):
-        if self.rect.colliderect(sau.rect) and self.bærer_sau == False:
+        if self.rect.colliderect(sau.rect) and not self.bærer_sau:
             self.bærer_sau = True
+            self.carried_sau = sau
+            sau.blir_dratt = True
             return True
         return False
     
-    def faa_poeng(self):
-        if self.bærer_sau == True and self.rect.right < FRI_BREDDE:
+    def faa_poeng(self, sauer:list[Sau]):
+        if self.bærer_sau and self.rect.right < FRI_BREDDE:
             self.poeng += 1
             self.bærer_sau = False
+            if self.carried_sau is not None and self.carried_sau in sauer:
+                sauer.remove(self.carried_sau)
+            self.carried_sau = None
 
 class Spokelse(Objekt):
     def __init__(self):

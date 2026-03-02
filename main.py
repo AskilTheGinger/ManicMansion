@@ -35,7 +35,7 @@ def tegne_brett():
     poengtekst_rect.topleft = (50, 50) 
     vindu.blit(poengtekst, poengtekst_rect)
 
-def game_loop(x1:int, y1:int):
+def game_loop(x:int, y:int):
     tegne_brett()
     gamle_poeng = player.poeng
     
@@ -43,7 +43,7 @@ def game_loop(x1:int, y1:int):
 
     for hindring in hindringer:
         if player.rect.colliderect(hindring.rect):
-            player.collide(x1, y1)
+            player.collide(x, y)
     
     for spokelse in spokelser:
         spokelse.oppdater()
@@ -54,9 +54,14 @@ def game_loop(x1:int, y1:int):
     
     for sau in sauer:
         if player.plukke_sau(sau):
-            sauer.remove(sau)
+            sau.blir_dratt = True
+            break
+            
 
-    player.faa_poeng()
+    if player.carried_sau:
+        player.carried_sau.folge(player.rect.centerx, player.rect.centery)
+
+    player.faa_poeng(sauer)
 
     if player.poeng > gamle_poeng:
         sauer.append(Sau())
@@ -66,8 +71,10 @@ def game_loop(x1:int, y1:int):
 
     for sau in sauer:
             sau.draw(vindu)
+
     for hindring in hindringer:
-        hindring.draw(vindu)        
+        hindring.draw(vindu) 
+
     for spokelse in spokelser:
             spokelse.draw(vindu)
     player.draw(vindu)
