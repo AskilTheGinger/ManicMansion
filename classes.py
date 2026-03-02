@@ -66,7 +66,7 @@ class Hindring(Objekt):
     def __init__(self):
         img = pg.image.load(IMAGE_DIR / "stein.png")
         scaled_img = pg.transform.scale_by(img, 0.3)
-        posisjon_x = random.randint(FRI_BREDDE, VINDU_BREDDE-FRI_BREDDE)
+        posisjon_x = random.randint(FRI_BREDDE, VINDU_BREDDE-FRI_BREDDE-scaled_img.get_width())
         posisjon_y = random.randint(0, VINDU_HOYDE)
         rect = scaled_img.get_rect(topleft=(posisjon_x, posisjon_y))
         super().__init__(0, 0, scaled_img, rect)

@@ -31,7 +31,6 @@ while running:
             running = False
         elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
             running = False
-        
     
     x1, y1 = player.rect.x, player.rect.y
 
