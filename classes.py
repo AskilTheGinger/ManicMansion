@@ -74,7 +74,7 @@ class Hindring(Objekt):
 
 class Sau(Objekt):
     def __init__(self):
-        img = pg.image.load(IMAGE_DIR / "spøkelse.png")
+        img = pg.image.load(IMAGE_DIR / "sau/south.png")
         scaled_img = pg.transform.scale_by(img, 0.5)
         rect = scaled_img.get_rect(topleft=(
             random.randint(0, VINDU_BREDDE),
