@@ -36,19 +36,22 @@ class Menneske(Objekt):
         rect = scaled_img.get_rect(topleft=(100, VINDU_HOYDE // 2))
         self.bærer_sau = False
         self.poeng = 0
+        self.fart = 5
         super().__init__(0, 0, scaled_img, rect)
     def move(self):
-        speed=5
         keys = pg.key.get_pressed()
-
+        if self.bærer_sau:
+            self.fart = 3
+        else:
+            self.fart = 5
         if keys[pg.K_w] and self.rect.y > 0:
-            self.rect.y -= speed
+            self.rect.y -= self.fart
         if keys[pg.K_s] and self.rect.y < VINDU_HOYDE - self.rect.height:
-            self.rect.y += speed
+            self.rect.y += self.fart
         if keys[pg.K_a] and self.rect.x > 0:
-            self.rect.x -= speed
+            self.rect.x -= self.fart
         if keys[pg.K_d] and self.rect.x < VINDU_BREDDE - self.rect.width:
-            self.rect.x += speed
+            self.rect.x += self.fart
 
     def collide(self, x:int, y:int):
         self.rect.x = x

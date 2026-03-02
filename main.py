@@ -14,12 +14,15 @@ spøkelse1 = Spokelse()
 
 hindringer:list[Hindring] = []
 sauer:list[Sau] = []
+spokelser:list[Spokelse] = []
 
 for _ in range(3):
     hindringer.append(Hindring())
 
 for _ in range(3):
     sauer.append(Sau())
+
+spokelser.append(Spokelse())
 
 def tegne_brett():
     poengtekst = font.render(f"Poeng: {player.poeng}", True, BLACK)
@@ -34,31 +37,39 @@ def tegne_brett():
 
 def game_loop(x1:int, y1:int):
     tegne_brett()
-
+    gamle_poeng = player.poeng
     for hindring in hindringer:
         hindring.draw(vindu)
     
-    
-        
     player.move()
 
     for hindring in hindringer:
         if player.rect.colliderect(hindring.rect):
             player.collide(x1, y1)
     
-    spøkelse1.oppdater()
-    if spøkelse1.rect.colliderect(player.rect):
-        return False
+    for spokelse in spokelser:
+        spokelse.oppdater()
+
+    for spokelse in spokelser:
+        if spokelse.rect.colliderect(player.rect):
+            return False
     
     for sau in sauer:
         if player.plukke_sau(sau):
             sauer.remove(sau)
 
     player.faa_poeng()
+    if player.poeng > gamle_poeng:
+        sauer.append(Sau())
+        hindringer.append(Hindring())
+        spokelser.append(Spokelse())
+
+
     for sau in sauer:
             sau.draw(vindu)
     player.draw(vindu)
-    spøkelse1.draw(vindu)
+    for spokelse in spokelser:
+            spokelse.draw(vindu)
     return True
 
 running = True
