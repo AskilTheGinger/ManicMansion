@@ -47,6 +47,8 @@ def game_loop(x:int, y:int):
     
     for spokelse in spokelser:
         spokelse.oppdater()
+        for hindring in hindringer:
+            spokelse.collide(hindring)
 
     for spokelse in spokelser:
         if spokelse.rect.colliderect(player.rect):
@@ -56,7 +58,8 @@ def game_loop(x:int, y:int):
         if player.plukke_sau(sau):
             sau.blir_dratt = True
             break
-            
+    
+    player.oppdater()
 
     if player.carried_sau:
         player.carried_sau.folge(player.rect.centerx, player.rect.centery)
@@ -96,17 +99,14 @@ while running:
     
     player.move()
     for hindring in hindringer:
-        hindring.draw(vindu)
-        spøkelse1.collide(hindring)
+
+        
         player.collide(hindring)
     
     tegne_brett()
     
-    player.oppdater()
-    player.draw(vindu)
     
-    spøkelse1.oppdater()
-    spøkelse1.draw(vindu)
+    
 
     
     if game_active:

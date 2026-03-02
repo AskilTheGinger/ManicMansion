@@ -129,10 +129,10 @@ class Spokelse(Objekt):
             elif type(hindring)==Hindring:
                 speed=(self.vx**2+self.vy**2)**(1/2)
                 #finner vinkelen slik at den randomiserte farten ikke er vendt tilbake mot boksen
-                angle = (atan2(((hindring.rect.centery-self.rect.centery)),(self.rect.centerx-hindring.rect.centerx))//(pi/2))-1
+                angle = (atan2(((self.rect.centery-hindring.rect.centery)),(self.rect.centerx-hindring.rect.centerx))//(pi/2))-1
                 #booter den ut av hindringen
-                self.x=hindring.rect.centerx+((hindring.rect.width/2)*cos(angle*pi))*1.1
-                self.y=hindring.rect.centery-((hindring.rect.height/2)*sin(angle*pi))*1.1
+                self.rect.x-= round(cos(angle*pi/2))*speed
+                self.rect.y-= round(sin(angle*pi/2))*speed
                 #lager en tilfeldig vinkel som er vekk fra objektet
                 ranAngle=random.uniform(-pi/2+(angle*pi),pi/2+angle*pi)
                 self.vx=speed*cos(ranAngle)
