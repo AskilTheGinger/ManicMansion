@@ -38,8 +38,6 @@ def tegne_brett():
 def game_loop(x1:int, y1:int):
     tegne_brett()
     gamle_poeng = player.poeng
-    for hindring in hindringer:
-        hindring.draw(vindu)
     
     player.move()
 
@@ -59,6 +57,7 @@ def game_loop(x1:int, y1:int):
             sauer.remove(sau)
 
     player.faa_poeng()
+
     if player.poeng > gamle_poeng:
         sauer.append(Sau())
         hindringer.append(Hindring())
@@ -67,9 +66,11 @@ def game_loop(x1:int, y1:int):
 
     for sau in sauer:
             sau.draw(vindu)
-    player.draw(vindu)
+    for hindring in hindringer:
+        hindring.draw(vindu)        
     for spokelse in spokelser:
             spokelse.draw(vindu)
+    player.draw(vindu)
     return True
 
 running = True

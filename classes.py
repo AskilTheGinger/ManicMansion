@@ -46,12 +46,20 @@ class Menneske(Objekt):
             self.fart = 5
         if keys[pg.K_w] and self.rect.y > 0:
             self.rect.y -= self.fart
+            img = pg.image.load(IMAGE_DIR / "karakter/north.png")
+            self.img = pg.transform.scale_by(img, 2.7)
         if keys[pg.K_s] and self.rect.y < VINDU_HOYDE - self.rect.height:
             self.rect.y += self.fart
+            img = pg.image.load(IMAGE_DIR / "karakter/south.png")
+            self.img = pg.transform.scale_by(img, 2.7)
         if keys[pg.K_a] and self.rect.x > 0:
             self.rect.x -= self.fart
+            img = pg.image.load(IMAGE_DIR / "karakter/west.png")
+            self.img = pg.transform.scale_by(img, 2.7)
         if keys[pg.K_d] and self.rect.x < VINDU_BREDDE - self.rect.width:
             self.rect.x += self.fart
+            img = pg.image.load(IMAGE_DIR / "karakter/east.png")
+            self.img = pg.transform.scale_by(img, 2.7)
 
     def collide(self, x:int, y:int):
         self.rect.x = x
