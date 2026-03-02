@@ -38,6 +38,8 @@ while running:
     vindu.fill(WHITE)
     for hindring in hindringer:
         hindring.draw(vindu)
+        
+    for hindring in hindringer:
         player.collide(hindring)
     
     tegne_brett()
