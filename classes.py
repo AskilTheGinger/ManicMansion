@@ -43,6 +43,8 @@ class Menneske(Objekt):
         self.carried_sau: Sau | None = None
         self.poeng = 0
         self.fart = 5
+        self.xretning: int =0
+        self.yretning: int =0
         super().__init__(0, 0, scaled_img, rect)
 
     def move(self):
@@ -74,7 +76,6 @@ class Menneske(Objekt):
         self.vx=0
         self.vy=0
     def collide(self, hindring:Objekt):
-        if self.rect.colliderect(hindring.rect):
             if type(hindring)==Hindring:
 
                 if self.vy:
@@ -166,13 +167,3 @@ class Hindring(Objekt):
         super().__init__(0, 0, scaled_img, rect)
 
 
-class Sau(Objekt):
-    def __init__(self):
-        img = pg.image.load(IMAGE_DIR / "spøkelse.png")
-        rect = img.get_rect(topleft=(
-            random.randint(0, VINDU_BREDDE),
-            random.randint(0, VINDU_HOYDE)
-        ))
-        super().__init__(0, 0, img, rect)
-    
-            

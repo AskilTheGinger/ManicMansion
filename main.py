@@ -43,7 +43,7 @@ def game_loop(x:int, y:int):
 
     for hindring in hindringer:
         if player.rect.colliderect(hindring.rect):
-            player.collide(x, y)
+            player.collide(hindring)
     
     for spokelse in spokelser:
         spokelse.oppdater()
