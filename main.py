@@ -1,4 +1,3 @@
-
 import pygame as pg
 
 from constants import *
@@ -7,9 +6,11 @@ from classes import *
 pg.init()
 vindu = pg.display.set_mode([VINDU_BREDDE, VINDU_HOYDE])
 clock = pg.time.Clock()
+font = pg.font.SysFont(None, 48)
 
 player = Menneske()
 spøkelse1 = Spokelse()
+poeng = 0
 
 hindringer:list[Hindring] = []
 sauer:list[Sau] = []
@@ -20,15 +21,19 @@ for _ in range(3):
 for _ in range(3):
     sauer.append(Sau())
 
-def tegne_brett():
+def tegne_brett(poeng:int):
+    poengtekst = font.render(f"Poeng: {poeng}", True, BLACK)
     fri_rect_venstre = pg.Rect(0,0,FRI_BREDDE,VINDU_HOYDE)
     fri_rect_hoyre = pg.Rect(FRI_HOYRE,0,FRI_BREDDE,VINDU_HOYDE)
 
     pg.draw.rect(vindu, GREY, fri_rect_venstre)
     pg.draw.rect(vindu, GREY, fri_rect_hoyre)
+    poengtekst_rect = poengtekst.get_rect()
+    poengtekst_rect.topleft = (50, 50) 
+    vindu.blit(poengtekst, poengtekst_rect)
 
 def game_loop(x1:int, y1:int):
-    tegne_brett()
+    tegne_brett(poeng)
 
     for hindring in hindringer:
         hindring.draw(vindu)
@@ -67,7 +72,10 @@ while running:
     if game_active:
         game_active = game_loop(x1, y1)
     else:
-        pass
+        poengtekst = font.render(f"Du fikk: {poeng} poeng", True, BLACK)
+        poengtekst_rect = poengtekst.get_rect()
+        poengtekst_rect.center = (VINDU_BREDDE//2, VINDU_HOYDE//2) 
+        vindu.blit(poengtekst, poengtekst_rect)
 
     pg.display.flip()
     clock.tick(FPS)
