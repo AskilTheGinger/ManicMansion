@@ -12,9 +12,13 @@ player = Menneske()
 spøkelse1 = Spokelse()
 
 hindringer:list[Hindring] = []
+sauer:list[Sau] = []
 
 for _ in range(3):
     hindringer.append(Hindring())
+
+for _ in range(3):
+    sauer.append(Sau())
 
 def tegne_brett():
     fri_rect_venstre = pg.Rect(0,0,FRI_BREDDE,VINDU_HOYDE)
@@ -35,8 +39,13 @@ while running:
     x1, y1 = player.rect.x, player.rect.y
 
     vindu.fill(WHITE)
+    tegne_brett()
+    
     for hindring in hindringer:
         hindring.draw(vindu)
+    
+    for sau in sauer:
+        sau.draw(vindu)
         
     player.move()
 
@@ -44,7 +53,6 @@ while running:
         if player.rect.colliderect(hindring.rect):
             player.collide(x1, y1)
     
-    tegne_brett()
     player.draw(vindu)
     spøkelse1.oppdater()
     spøkelse1.draw(vindu)

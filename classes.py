@@ -41,8 +41,6 @@ class Menneske(Objekt):
         self.rect.x = x
         self.rect.y = y
 
-
-
 class Spokelse(Objekt):
     def __init__(self):
         x = FRI_BREDDE + random.randint(0, VINDU_BREDDE - FRI_BREDDE*2)
@@ -67,17 +65,16 @@ class Hindring(Objekt):
         img = pg.image.load(IMAGE_DIR / "stein.png")
         scaled_img = pg.transform.scale_by(img, 0.3)
         posisjon_x = random.randint(FRI_BREDDE, VINDU_BREDDE-FRI_BREDDE-scaled_img.get_width())
-        posisjon_y = random.randint(0, VINDU_HOYDE)
+        posisjon_y = random.randint(0, VINDU_HOYDE-scaled_img.get_height())
         rect = scaled_img.get_rect(topleft=(posisjon_x, posisjon_y))
         super().__init__(0, 0, scaled_img, rect)
 
 
 class Sau(Objekt):
     def __init__(self):
-        img = pg.image.load(IMAGE_DIR / "sau/south.png")
-        scaled_img = pg.transform.scale_by(img, 0.5)
+        img = pg.image.load(IMAGE_DIR / "sau/west.png")
+        scaled_img = pg.transform.scale_by(img, 2)
         rect = scaled_img.get_rect(topleft=(
-            random.randint(0, VINDU_BREDDE),
-            random.randint(0, VINDU_HOYDE)
-        ))
+            random.randint(VINDU_BREDDE-FRI_BREDDE,VINDU_BREDDE),
+            random.randint(0, VINDU_HOYDE)))
         super().__init__(0, 0, scaled_img, rect)
