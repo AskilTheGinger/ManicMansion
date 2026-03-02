@@ -41,10 +41,10 @@ class Menneske(Objekt):
         rect = scaled_img.get_rect(topleft=(100, VINDU_HOYDE // 2))
         self.bærer_sau = False
         self.carried_sau: Sau | None = None
+        self.yretning:int=0
+        self.xretning:int=0
         self.poeng = 0
         self.fart = 5
-        self.xretning: int =0
-        self.yretning: int =0
         super().__init__(0, 0, scaled_img, rect)
 
     def move(self):
@@ -76,18 +76,15 @@ class Menneske(Objekt):
         self.vx=0
         self.vy=0
     def collide(self, hindring:Objekt):
+        if self.rect.colliderect(hindring.rect):
             if type(hindring)==Hindring:
-
-                if self.vy:
-                    self.yretning:int= int(self.vy/(abs(self.vy)))
-                
-                if self.vx:
-                    self.xretning:int= int(self.vx/(abs(self.vx)))
-                
-                self.rect.x-=self.xretning*5
-                self.rect.y-=self.yretning*5
+                vinkel:int = int((atan2(self.rect.centery-hindring.rect.centery, self.rect.centerx-hindring.rect.centerx)-pi/4)//(pi/2))-1
+                print(vinkel)
+                self.rect.x-= round(cos(vinkel*pi/2))
+                self.rect.y-= round(sin(vinkel*pi/2))
                 self.vx=0
                 self.vy=0
+                
             if type(hindring)==Sau:
                 return True
 
