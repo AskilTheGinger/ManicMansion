@@ -43,8 +43,6 @@ class Menneske(Objekt):
         rect = scaled_img.get_rect(topleft=(100, VINDU_HOYDE // 2))
         self.bærer_sau = False
         self.bært_sau: Sau | None = None
-        self.yretning:int=0
-        self.xretning:int=0
         self.poeng = 0
         self.fart = 5
         self.img_path = {
@@ -94,7 +92,7 @@ class Menneske(Objekt):
         super().oppdater()
         self.vx=0
         self.vy=0
-    def collide(self, hindring:Objekt):
+    def collide(self, hindring:Objekt) -> None:
         if self.rect.colliderect(hindring.rect):
             if type(hindring)==Hindring:
                 vinkel:int = int((atan2(self.rect.centery-hindring.rect.centery, self.rect.centerx-hindring.rect.centerx)-pi/4)//(pi/2))-1
@@ -102,12 +100,10 @@ class Menneske(Objekt):
                 self.rect.y-= round(sin(vinkel*pi/2))
                 self.vx=0
                 self.vy=0
-                
-            if type(hindring)==Sau:
-                return True
+            
 
 
-    def plukke_sau(self, sau:Sau):
+    def plukke_sau(self, sau:Sau) -> bool:
         if self.rect.colliderect(sau.rect) and not self.bærer_sau:
             self.bærer_sau = True
             self.bært_sau = sau
