@@ -43,8 +43,6 @@ class Menneske(Objekt):
         rect = scaled_img.get_rect(topleft=(100, VINDU_HOYDE // 2))
         self.bærer_sau = False
         self.bært_sau: Sau | None = None
-        self.yretning:int=0
-        self.xretning:int=0
         self.poeng = 0
         self.fart = 5
         self.img_path = {
