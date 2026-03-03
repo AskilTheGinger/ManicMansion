@@ -4,6 +4,8 @@ from constants import *
 from classes import *
 
 pg.init()
+pg.mixer.init()
+
 vindu = pg.display.set_mode([VINDU_BREDDE, VINDU_HOYDE])
 clock = pg.time.Clock()
 font = pg.font.SysFont(None, 48)
@@ -13,6 +15,12 @@ player = Menneske()
 hindringer:list[Hindring] = []
 sauer:list[Sau] = []
 spokelser:list[Spokelse] = []
+
+sauelyd = pg.mixer.Sound(IMAGE_DIR /"sound/sau.mp3")
+SAU_LYD_EVENT = pg.USEREVENT + 1
+første_intervall = random.randint(3000, 8000)   
+pg.time.set_timer(SAU_LYD_EVENT, første_intervall, loops=1)
+
 
 for _ in range(3):
     hindringer.append(Hindring())
@@ -26,14 +34,10 @@ mur = pg.image.load(IMAGE_DIR/"mur.png").convert_alpha()
 mur_venstre = pg.transform.scale(mur, (FRI_BREDDE, VINDU_HOYDE))
 mur_hoyre = pg.transform.flip(mur_venstre,True, False)
 
-
-
-
 def tegne_brett():
     poengtekst = font.render(f"Poeng: {player.poeng}", True, BLACK)
     fri_rect_venstre = pg.Rect(0,0,FRI_BREDDE,VINDU_HOYDE)
     fri_rect_hoyre = pg.Rect(FRI_HOYRE,0,FRI_BREDDE,VINDU_HOYDE)
-
     vindu.blit(mur_venstre, fri_rect_venstre)
     vindu.blit(mur_hoyre, fri_rect_hoyre)
     poengtekst_rect = poengtekst.get_rect()
@@ -94,7 +98,11 @@ while running:
             running = False
         elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
             running = False
-
+        elif event.type == SAU_LYD_EVENT:
+            sauelyd.play()
+            neste_intervall = random.randint(3000, 8000)
+            pg.time.set_timer(SAU_LYD_EVENT, neste_intervall, loops=1)
+            
     vindu.blit(bakgrunn,(0,0))
 
     if game_active:
@@ -104,7 +112,6 @@ while running:
         poengtekst_rect = poengtekst.get_rect()
         poengtekst_rect.center = (VINDU_BREDDE//2, VINDU_HOYDE//2) 
         vindu.blit(poengtekst, poengtekst_rect)
-
     pg.display.flip()
     clock.tick(FPS)
 
