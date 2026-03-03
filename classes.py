@@ -12,8 +12,8 @@ class Objekt:
     rect: pg.Rect
     
     def oppdater(self):
-        self.rect.x+=self.vx
-        self.rect.y+=self.vy
+        self.rect.x += self.vx
+        self.rect.y += self.vy
 
     def draw(self, vindu: pg.Surface):
         vindu.blit(self.img, self.rect)
@@ -92,6 +92,7 @@ class Menneske(Objekt):
         super().oppdater()
         self.vx=0
         self.vy=0
+
     def collide(self, hindring:Objekt):
         if self.rect.colliderect(hindring.rect):
             if type(hindring)==Hindring:
@@ -100,12 +101,9 @@ class Menneske(Objekt):
                 self.rect.y-= round(sin(vinkel*pi/2))
                 self.vx=0
                 self.vy=0
-                
-            if type(hindring)==Sau:
-                return True
 
 
-    def plukke_sau(self, sau:Sau):
+    def plukke_sau(self, sau:Sau) -> bool: 
         if self.rect.colliderect(sau.rect) and not self.bærer_sau:
             self.bærer_sau = True
             self.bært_sau = sau
@@ -128,14 +126,12 @@ class Spokelse(Objekt):
         scaled_img = pg.transform.scale_by(img, 0.5)
         x = FRI_BREDDE + random.randint(0, VINDU_BREDDE - (FRI_BREDDE*2)-scaled_img.get_width())
         y = random.randint(0, VINDU_HOYDE-80)
-        vx = -4
-        vy=4
         nytt_img = pg.transform.scale_by(img, 0.5)
         rect = img.get_rect(topleft=(x, y))
         #skalerer det ned slik at den ikke er større enn spriten
         rect.width= int(round(rect.width/2))
         rect.height =int(round(rect.height/2))
-        super().__init__(vx, vy, nytt_img, rect)
+        super().__init__(-4, 4, nytt_img, rect)
                
     
     def oppdater(self):
@@ -167,7 +163,7 @@ class Hindring(Objekt):
         rect.height =int(round(rect.height*0.3))
         super().__init__(0, 0, scaled_img, rect)
     def collide(self,hindring:Objekt):
-        if self.rect.colliderect(hindring.rect) and type(hindring)==Hindring and not self:
+        if self.rect.colliderect(hindring.rect) and type(hindring) == Hindring and hindring is not self:
             self.rect.left = random.randint(FRI_BREDDE, VINDU_BREDDE-FRI_BREDDE)
             self.rect.height = random.randint(0, VINDU_HOYDE)
            
