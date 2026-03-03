@@ -64,6 +64,10 @@ def game_loop():
 
     if player.bært_sau:
         player.bært_sau.folge(player.rect.centerx, player.rect.centery)
+        for sau in sauer:
+            if player.rect.colliderect(sau.rect) and sau != player.bært_sau:
+                return False
+
 
     player.faa_poeng(sauer)
 

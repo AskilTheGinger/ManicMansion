@@ -152,8 +152,7 @@ class Spokelse(Objekt):
             ranvinkel=random.uniform(-pi/6+(vinkel*pi/2),pi/6+(vinkel*pi/2))
             self.vx=speed*cos(ranvinkel)
             self.vy=speed*sin(ranvinkel)
-            print(ranvinkel)
-            print(vinkel)
+            
     
 
 class Hindring(Objekt):
