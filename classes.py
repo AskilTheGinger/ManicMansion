@@ -150,18 +150,18 @@ class Spokelse(Objekt):
             self.vx=speed*cos(ranvinkel)
             self.vy=speed*sin(ranvinkel)
             
-    
 
 class Hindring(Objekt):
     def __init__(self):
         img = pg.image.load(IMAGE_DIR / "stein.png")
         scaled_img = pg.transform.scale_by(img, 0.3)
-        posisjon_x = random.randint(FRI_BREDDE, VINDU_BREDDE-FRI_BREDDE-scaled_img.get_width())
-        posisjon_y = random.randint(0, VINDU_HOYDE-scaled_img.get_height())
-        rect = img.get_rect(topleft=(posisjon_x, posisjon_y))
-        rect.width= int(round(rect.width*0.3))
-        rect.height =int(round(rect.height*0.3))
+        rect = scaled_img.get_rect(topleft=(
+            random.randint(FRI_BREDDE, VINDU_BREDDE-FRI_BREDDE-scaled_img.get_width()),
+            random.randint(0, VINDU_HOYDE-scaled_img.get_height())))
+        """rect.width = int(round(rect.width*0.3))
+        rect.height =int(round(rect.height*0.3))"""
         super().__init__(0, 0, scaled_img, rect)
+    
     def self_collide(self,hindring:Objekt):
         if self.rect.colliderect(hindring.rect) and type(hindring)== Hindring and hindring is not self:
             self.rect.x = random.randint(FRI_BREDDE, VINDU_BREDDE-FRI_BREDDE-self.img.get_width())
