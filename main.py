@@ -62,8 +62,8 @@ def game_loop():
     player.move()
 
     for hindring in hindringer:
-        for hindringa in hindringer:
-            hindring.collide(hindringa)
+        for ny_hindring in hindringer:
+            hindring.self_collide(ny_hindring)
 
         if player.rect.colliderect(hindring.rect):
             player.collide(hindring)
@@ -77,6 +77,8 @@ def game_loop():
     for sau in sauer:
         for saua in sauer:
             sau.collide(saua)
+        for ny_sau in sauer:
+            sau.self_collide(ny_sau)
         if player.plukke_sau(sau):
             break
     
