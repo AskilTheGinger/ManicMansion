@@ -30,6 +30,10 @@ class Sau(Objekt):
     def folge(self, x:int, y:int):
         if self.blir_dratt == True:
             self.rect.center = x, y 
+    def collide(self,hindring:Objekt):
+        if self.rect.colliderect(hindring.rect) and type(hindring)==Sau and not self:
+            self.rect.left = random.randint(FRI_BREDDE, VINDU_BREDDE-FRI_BREDDE)
+            self.rect.height = random.randint(0, VINDU_HOYDE)
 
 
 class Menneske(Objekt):
@@ -164,5 +168,11 @@ class Hindring(Objekt):
         rect.width= int(round(rect.width*0.3))
         rect.height =int(round(rect.height*0.3))
         super().__init__(0, 0, scaled_img, rect)
+    def collide(self,hindring:Objekt):
+        if self.rect.colliderect(hindring.rect) and type(hindring)==Hindring and not self:
+            self.rect.left = random.randint(FRI_BREDDE, VINDU_BREDDE-FRI_BREDDE)
+            self.rect.height = random.randint(0, VINDU_HOYDE)
+           
+            
 
 
