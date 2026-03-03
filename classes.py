@@ -45,6 +45,12 @@ class Menneske(Objekt):
         self.xretning:int=0
         self.poeng = 0
         self.fart = 5
+        self.img_path = {
+            "north": pg.image.load(IMAGE_DIR / "karakter/north.png"),
+            "south": pg.image.load(IMAGE_DIR / "karakter/south.png"),
+            "east": pg.image.load(IMAGE_DIR / "karakter/east.png"),
+            "west": pg.image.load(IMAGE_DIR / "karakter/west.png"),
+        }
         super().__init__(0, 0, scaled_img, rect)
 
     def move(self):
@@ -55,20 +61,16 @@ class Menneske(Objekt):
             self.fart = 5
         if keys[pg.K_w] and self.rect.y > 0:
             self.vy = -self.fart
-            img = pg.image.load(IMAGE_DIR / "karakter/north.png")
-            self.img = pg.transform.scale_by(img, 2.7)
+            self.img = pg.transform.scale_by(self.img_path["north"], 2.7)
         if keys[pg.K_s] and self.rect.y < VINDU_HOYDE - self.rect.height:
             self.vy = self.fart
-            img = pg.image.load(IMAGE_DIR / "karakter/south.png")
-            self.img = pg.transform.scale_by(img, 2.7)
+            self.img = pg.transform.scale_by(self.img_path["south"], 2.7)
         if keys[pg.K_a] and self.rect.x > 0:
             self.vx = -self.fart
-            img = pg.image.load(IMAGE_DIR / "karakter/west.png")
-            self.img = pg.transform.scale_by(img, 2.7)
+            self.img = pg.transform.scale_by(self.img_path["west"], 2.7)
         if keys[pg.K_d] and self.rect.x < VINDU_BREDDE - self.rect.width:
             self.vx = self.fart
-            img = pg.image.load(IMAGE_DIR / "karakter/east.png")
-            self.img = pg.transform.scale_by(img, 2.7)
+            self.img = pg.transform.scale_by(self.img_path["east"], 2.7)
 
 
     def oppdater(self):
