@@ -102,7 +102,7 @@ class Menneske(Objekt):
                 self.vy=0
 
 
-    def plukke_sau(self, sau:Sau) -> bool -> bool: 
+    def plukke_sau(self, sau:Sau) -> bool: 
         if self.rect.colliderect(sau.rect) and not self.bærer_sau:
             self.bærer_sau = True
             self.bært_sau = sau
