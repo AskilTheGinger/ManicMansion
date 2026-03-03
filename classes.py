@@ -40,7 +40,7 @@ class Menneske(Objekt):
         scaled_img = pg.transform.scale_by(img, 2.7)
         rect = scaled_img.get_rect(topleft=(100, VINDU_HOYDE // 2))
         self.bærer_sau = False
-        self.carried_sau: Sau | None = None
+        self.bært_sau: Sau | None = None
         self.yretning:int=0
         self.xretning:int=0
         self.poeng = 0
@@ -50,10 +50,15 @@ class Menneske(Objekt):
             "south": pg.image.load(IMAGE_DIR / "karakter/south.png"),
             "east": pg.image.load(IMAGE_DIR / "karakter/east.png"),
             "west": pg.image.load(IMAGE_DIR / "karakter/west.png"),
+            "north-east": pg.image.load(IMAGE_DIR / "karakter/north-east.png"),
+            "south-east": pg.image.load(IMAGE_DIR / "karakter/south-east.png"),
+            "north-west": pg.image.load(IMAGE_DIR / "karakter/north-west.png"),
+            "south-west": pg.image.load(IMAGE_DIR / "karakter/south-west.png"),
         }
         super().__init__(0, 0, scaled_img, rect)
 
     def move(self):
+        img = self.img_path["south"]
         keys = pg.key.get_pressed()
         if self.bærer_sau:
             self.fart = 3
@@ -61,16 +66,28 @@ class Menneske(Objekt):
             self.fart = 5
         if keys[pg.K_w] and self.rect.y > 0:
             self.vy = -self.fart
-            self.img = pg.transform.scale_by(self.img_path["north"], 2.7)
+            img = self.img_path["north"]
         if keys[pg.K_s] and self.rect.y < VINDU_HOYDE - self.rect.height:
             self.vy = self.fart
-            self.img = pg.transform.scale_by(self.img_path["south"], 2.7)
+            img = self.img_path["south"]
         if keys[pg.K_a] and self.rect.x > 0:
             self.vx = -self.fart
-            self.img = pg.transform.scale_by(self.img_path["west"], 2.7)
+            img = self.img_path["west"]
         if keys[pg.K_d] and self.rect.x < VINDU_BREDDE - self.rect.width:
             self.vx = self.fart
-            self.img = pg.transform.scale_by(self.img_path["east"], 2.7)
+            img = self.img_path["east"]
+        
+        if keys[pg.K_w] and keys[pg.K_d]:
+            img = self.img_path["north-east"]
+        if keys[pg.K_s] and keys[pg.K_d]:
+            img = self.img_path["south-east"]
+        if keys[pg.K_s] and keys[pg.K_a]:
+            img = self.img_path["south-west"]
+        if keys[pg.K_a] and keys[pg.K_w]:
+            img = self.img_path["north-west"]
+        
+        self.img = pg.transform.scale_by(img, 2.7)
+        
 
 
     def oppdater(self):
@@ -94,7 +111,7 @@ class Menneske(Objekt):
     def plukke_sau(self, sau:Sau):
         if self.rect.colliderect(sau.rect) and not self.bærer_sau:
             self.bærer_sau = True
-            self.carried_sau = sau
+            self.bært_sau = sau
             sau.blir_dratt = True
             return True
         return False
@@ -103,9 +120,9 @@ class Menneske(Objekt):
         if self.bærer_sau and self.rect.right < FRI_BREDDE:
             self.poeng += 1
             self.bærer_sau = False
-            if self.carried_sau is not None and self.carried_sau in sauer:
-                sauer.remove(self.carried_sau)
-            self.carried_sau = None
+            if self.bært_sau is not None and self.bært_sau in sauer:
+                sauer.remove(self.bært_sau)
+            self.bært_sau = None
 
 
 class Spokelse(Objekt):
@@ -116,7 +133,6 @@ class Spokelse(Objekt):
         y = random.randint(0, VINDU_HOYDE-80)
         vx = -4
         vy=4
-        img = pg.image.load(IMAGE_DIR / "spøkelse.png")
         nytt_img = pg.transform.scale_by(img, 0.5)
         rect = img.get_rect(topleft=(x, y))
         #skalerer det ned slik at den ikke er større enn spriten

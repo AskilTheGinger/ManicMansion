@@ -9,8 +9,6 @@ clock = pg.time.Clock()
 font = pg.font.SysFont(None, 48)
 
 player = Menneske()
-spøkelse1 = Spokelse()
-
 
 hindringer:list[Hindring] = []
 sauer:list[Sau] = []
@@ -35,7 +33,7 @@ def tegne_brett():
     poengtekst_rect.topleft = (50, 50) 
     vindu.blit(poengtekst, poengtekst_rect)
 
-def game_loop(x:int, y:int):
+def game_loop():
     tegne_brett()
     gamle_poeng = player.poeng
     
@@ -45,22 +43,20 @@ def game_loop(x:int, y:int):
         if player.rect.colliderect(hindring.rect):
             player.collide(hindring)
     
-    for spokelse in spokelser:
-        spokelse.oppdater()
 
     for spokelse in spokelser:
+        spokelse.oppdater()
         if spokelse.rect.colliderect(player.rect):
             return False
     
     for sau in sauer:
         if player.plukke_sau(sau):
-            sau.blir_dratt = True
             break
     
     player.oppdater()
 
-    if player.carried_sau:
-        player.carried_sau.folge(player.rect.centerx, player.rect.centery)
+    if player.bært_sau:
+        player.bært_sau.folge(player.rect.centerx, player.rect.centery)
 
     player.faa_poeng(sauer)
 
@@ -90,13 +86,11 @@ while running:
             running = False
         elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
             running = False
-    
-    x1, y1 = player.rect.x, player.rect.y
 
     vindu.fill(WHITE)
  
     if game_active:
-        game_active = game_loop(x1, y1)
+        game_active = game_loop()
     else:
         poengtekst = font.render(f"Du fikk: {player.poeng} poeng", True, BLACK)
         poengtekst_rect = poengtekst.get_rect()
