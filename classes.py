@@ -12,8 +12,8 @@ class Objekt:
     rect: pg.Rect
     
     def oppdater(self):
-        self.rect.left+=self.vx
-        self.rect.top+=self.vy
+        self.rect.x+=self.vx
+        self.rect.y+=self.vy
 
     def draw(self, vindu: pg.Surface):
         vindu.blit(self.img, self.rect)
