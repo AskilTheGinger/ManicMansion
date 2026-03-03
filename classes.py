@@ -31,7 +31,7 @@ class Sau(Objekt):
         super().__init__(0, 0, scaled_img, rect)
     def folge(self, x:int, y:int):
         if self.blir_dratt == True:
-            self.rect.center = x + 50, y 
+            self.rect.center = x, y 
 
 
 class Menneske(Objekt):

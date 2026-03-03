@@ -16,9 +16,13 @@ hindringer:list[Hindring] = []
 sauer:list[Sau] = []
 spokelser:list[Spokelse] = []
 
+pg.mixer.music.load(IMAGE_DIR/"sound/musikk.mp3")
+pg.mixer.music.set_volume(0.1)
+pg.mixer.music.play(-1)
+
 sauelyd = pg.mixer.Sound(IMAGE_DIR /"sound/sau.mp3")
 SAU_LYD_EVENT = pg.USEREVENT + 1
-første_intervall = random.randint(3000, 8000)   
+første_intervall = random.randint(3000, 10000)   
 pg.time.set_timer(SAU_LYD_EVENT, første_intervall, loops=1)
 
 
@@ -106,9 +110,8 @@ while running:
             sauelyd.play()
             neste_intervall = random.randint(3000, 8000)
             pg.time.set_timer(SAU_LYD_EVENT, neste_intervall, loops=1)
-            
-    vindu.blit(bakgrunn,(0,0))
 
+    vindu.blit(bakgrunn,(0,0))
     if game_active:
         game_active = game_loop()
     else:
