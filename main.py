@@ -25,6 +25,27 @@ SAU_LYD_EVENT = pg.USEREVENT + 1
 første_intervall = random.randint(3000, 10000)   
 pg.time.set_timer(SAU_LYD_EVENT, første_intervall, loops=1)
 
+mur = pg.image.load(IMAGE_DIR/"mur.png").convert_alpha()
+mur_venstre = pg.transform.scale(mur, (FRI_BREDDE, VINDU_HOYDE))
+mur_hoyre = pg.transform.flip(mur_venstre,True, False)
+
+restart_rect = pg.Rect(0, 0, 0, 0)
+
+def tegne_brett():
+    poengtekst = font.render(f"Poeng: {player.poeng}", True, BLACK)
+    poengtekst_rect = poengtekst.get_rect(topleft = (50, 50))
+
+    fri_rect_venstre = pg.Rect(0,0,FRI_BREDDE,VINDU_HOYDE)
+    fri_rect_hoyre = pg.Rect(FRI_HOYRE,0,FRI_BREDDE,VINDU_HOYDE)
+
+    vindu.blit(mur_venstre, fri_rect_venstre)
+    vindu.blit(mur_hoyre, fri_rect_hoyre)
+    
+    pg.draw.rect(vindu, WHITE, poengtekst_rect.inflate(30, 20), border_radius=10)
+    pg.draw.rect(vindu, BLACK, poengtekst_rect.inflate(30, 20), 4, border_radius=10)
+
+    vindu.blit(poengtekst, poengtekst_rect)
+
 
 for _ in range(3):
     hindringer.append(Hindring())
@@ -34,26 +55,6 @@ for _ in range(3):
 
 spokelser.append(Spokelse())
 
-mur = pg.image.load(IMAGE_DIR/"mur.png").convert_alpha()
-mur_venstre = pg.transform.scale(mur, (FRI_BREDDE, VINDU_HOYDE))
-mur_hoyre = pg.transform.flip(mur_venstre,True, False)
-
-tekstboble = pg.image.load(IMAGE_DIR/"tekstboble.png")
-def tegne_brett():
-    poengtekst = font.render(f"Poeng: {player.poeng}", True, BLACK)
-    fri_rect_venstre = pg.Rect(0,0,FRI_BREDDE,VINDU_HOYDE)
-    fri_rect_hoyre = pg.Rect(FRI_HOYRE,0,FRI_BREDDE,VINDU_HOYDE)
-    vindu.blit(mur_venstre, fri_rect_venstre)
-    vindu.blit(mur_hoyre, fri_rect_hoyre)
-
-    poengtekst_rect = poengtekst.get_rect()
-    poengtekst_rect.topleft = (50, 50)
-
-    tekstboble_skaler = pg.transform.scale(tekstboble, (poengtekst_rect.width + 50, poengtekst_rect.height + 50))
-    tekstboble_rect = tekstboble_skaler.get_rect(center=poengtekst_rect.center) 
-
-    vindu.blit(tekstboble_skaler, tekstboble_rect)
-    vindu.blit(poengtekst, poengtekst_rect)
 
 def game_loop():
     tegne_brett()
@@ -90,7 +91,6 @@ def game_loop():
             if player.rect.colliderect(sau.rect) and sau != player.bært_sau:
                 return False
 
-
     player.faa_poeng(sauer)
 
     if player.poeng > gamle_poeng:
@@ -124,8 +124,24 @@ while running:
             sauelyd.play()
             neste_intervall = random.randint(3000, 8000)
             pg.time.set_timer(SAU_LYD_EVENT, neste_intervall, loops=1)
+        elif event.type == pg.MOUSEBUTTONDOWN and not game_active:
+            if restart_rect.collidepoint(event.pos):
+                player = Menneske()
+                hindringer.clear()
+                sauer.clear()
+                spokelser.clear()
+                for _ in range(3):
+                    hindringer.append(Hindring())
+                for _ in range(3):
+                    sauer.append(Sau())
+                spokelser.append(Spokelse())
+                pg.mixer.music.play(-1)
+                første_intervall = random.randint(3000, 10000)
+                pg.time.set_timer(SAU_LYD_EVENT, første_intervall, loops=1)
+                game_active = True
 
     vindu.blit(bakgrunn,(0,0))
+
     if game_active:
         game_active = game_loop()
     else:
@@ -134,6 +150,13 @@ while running:
         poengtekst_rect = poengtekst.get_rect()
         poengtekst_rect.center = (VINDU_BREDDE//2, VINDU_HOYDE//2) 
         vindu.blit(poengtekst, poengtekst_rect)
+
+        restart_tekst = font.render("Restart", True, BLACK)
+        restart_rect = restart_tekst.get_rect(center=(VINDU_BREDDE//2, VINDU_HOYDE//2 + 60))
+        pg.draw.rect(vindu, WHITE, restart_rect.inflate(30, 20), border_radius = 10)
+        pg.draw.rect(vindu, BLACK, restart_rect.inflate(30, 20), 4, border_radius = 10)
+        vindu.blit(restart_tekst, restart_rect)
+        
     pg.display.flip()
     clock.tick(FPS)
 
