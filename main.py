@@ -22,13 +22,22 @@ for _ in range(3):
 
 spokelser.append(Spokelse())
 
+mur = pg.image.load(IMAGE_DIR/"mur.png").convert()
+mur_venstre = pg.transform.scale(mur, (FRI_BREDDE, VINDU_HOYDE))
+mur_hoyre = pg.transform.flip(mur_venstre,True, False)
+
+
+
+
 def tegne_brett():
     poengtekst = font.render(f"Poeng: {player.poeng}", True, BLACK)
     fri_rect_venstre = pg.Rect(0,0,FRI_BREDDE,VINDU_HOYDE)
     fri_rect_hoyre = pg.Rect(FRI_HOYRE,0,FRI_BREDDE,VINDU_HOYDE)
-
-    pg.draw.rect(vindu, GREY, fri_rect_venstre)
+   
     pg.draw.rect(vindu, GREY, fri_rect_hoyre)
+
+    vindu.blit(mur_venstre, fri_rect_venstre)
+    vindu.blit(mur_hoyre, fri_rect_hoyre)
     poengtekst_rect = poengtekst.get_rect()
     poengtekst_rect.topleft = (50, 50) 
     vindu.blit(poengtekst, poengtekst_rect)
@@ -65,7 +74,6 @@ def game_loop():
         hindringer.append(Hindring())
         spokelser.append(Spokelse())
 
-
     for sau in sauer:
             sau.draw(vindu)
 
@@ -79,6 +87,8 @@ def game_loop():
 
 running = True
 game_active = True
+bakgrunn = pg.image.load(IMAGE_DIR/"bakgrunn.png").convert()
+bakgrunn = pg.transform.scale(bakgrunn, (VINDU_BREDDE, VINDU_HOYDE))
 
 while running:
     for event in pg.event.get():
@@ -87,8 +97,8 @@ while running:
         elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
             running = False
 
-    vindu.fill(WHITE)
- 
+    vindu.blit(bakgrunn,(0,0))
+
     if game_active:
         game_active = game_loop()
     else:

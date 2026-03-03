@@ -88,8 +88,6 @@ class Menneske(Objekt):
         
         self.img = pg.transform.scale_by(img, 2.7)
         
-
-
     def oppdater(self):
         super().oppdater()
         self.vx=0
@@ -98,7 +96,6 @@ class Menneske(Objekt):
         if self.rect.colliderect(hindring.rect):
             if type(hindring)==Hindring:
                 vinkel:int = int((atan2(self.rect.centery-hindring.rect.centery, self.rect.centerx-hindring.rect.centerx)-pi/4)//(pi/2))-1
-                print(vinkel)
                 self.rect.x-= round(cos(vinkel*pi/2))
                 self.rect.y-= round(sin(vinkel*pi/2))
                 self.vx=0
