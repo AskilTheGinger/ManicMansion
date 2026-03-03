@@ -144,12 +144,12 @@ class Spokelse(Objekt):
         if FRI_BREDDE>=self.rect.left or self.rect.left>=(VINDU_BREDDE-FRI_BREDDE-self.rect.width) or  0 >= self.rect.top or self.rect.top>=(VINDU_HOYDE-self.rect.height):
             speed=(self.vx**2+self.vy**2)**(1/2)
             #finner vinkelen slik at den randomiserte farten ikke er vendt tilbake mot boksen
-            vinkel = (atan2(((self.rect.centery-(VINDU_HOYDE/2))),(self.rect.centerx-(VINDU_BREDDE/2)))//(pi/2))-1
+            vinkel = ((atan2(((self.rect.centery-(VINDU_HOYDE/2))),(self.rect.centerx-(VINDU_BREDDE/2)))-pi/4)//(pi/2))-1
             #booter den ut av hindringen
             self.rect.x+= round(cos(vinkel*pi/2))*speed
             self.rect.y+= round(sin(vinkel*pi/2))*speed
             #lager en tilfeldig vinkel som er vekk fra objektet
-            ranvinkel=random.uniform(-pi/4+(vinkel*pi/2),pi/4+(vinkel*pi/2))
+            ranvinkel=random.uniform(-pi/6+(vinkel*pi/2),pi/6+(vinkel*pi/2))
             self.vx=speed*cos(ranvinkel)
             self.vy=speed*sin(ranvinkel)
             print(ranvinkel)
