@@ -22,7 +22,7 @@ for _ in range(3):
 
 spokelser.append(Spokelse())
 
-mur = pg.image.load(IMAGE_DIR/"mur.png").convert()
+mur = pg.image.load(IMAGE_DIR/"mur.png").convert_alpha()
 mur_venstre = pg.transform.scale(mur, (FRI_BREDDE, VINDU_HOYDE))
 mur_hoyre = pg.transform.flip(mur_venstre,True, False)
 
@@ -33,8 +33,6 @@ def tegne_brett():
     poengtekst = font.render(f"Poeng: {player.poeng}", True, BLACK)
     fri_rect_venstre = pg.Rect(0,0,FRI_BREDDE,VINDU_HOYDE)
     fri_rect_hoyre = pg.Rect(FRI_HOYRE,0,FRI_BREDDE,VINDU_HOYDE)
-   
-    pg.draw.rect(vindu, GREY, fri_rect_hoyre)
 
     vindu.blit(mur_venstre, fri_rect_venstre)
     vindu.blit(mur_hoyre, fri_rect_hoyre)
