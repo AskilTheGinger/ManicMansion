@@ -115,6 +115,7 @@ while running:
     if game_active:
         game_active = game_loop()
     else:
+        pg.time.set_timer(SAU_LYD_EVENT, 0)
         poengtekst = font.render(f"Du fikk: {player.poeng} poeng", True, BLACK)
         poengtekst_rect = poengtekst.get_rect()
         poengtekst_rect.center = (VINDU_BREDDE//2, VINDU_HOYDE//2) 

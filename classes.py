@@ -17,9 +17,7 @@ class Objekt:
 
     def draw(self, vindu: pg.Surface):
         vindu.blit(self.img, self.rect)
-        
-       
-
+  
 class Sau(Objekt):
     def __init__(self):
         img = pg.image.load(IMAGE_DIR / "sau/west.png")
