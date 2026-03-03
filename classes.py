@@ -121,27 +121,7 @@ class Spokelse(Objekt):
         rect.width= int(round(rect.width/2))
         rect.height =int(round(rect.height/2))
         super().__init__(vx, vy, nytt_img, rect)
-    
-    def collide(self, hindring:Objekt):
-        if self.rect.colliderect(hindring.rect):
-            if type(hindring)==Menneske:
-                return True
-            elif type(hindring)==Hindring:
-                speed=(self.vx**2+self.vy**2)**(1/2)
-                #finner vinkelen slik at den randomiserte farten ikke er vendt tilbake mot boksen
-                vinkel = (atan2(((self.rect.centery-hindring.rect.centery)),(self.rect.centerx-hindring.rect.centerx))//(pi/2))-1
-                #booter den ut av hindringen
-                self.rect.x-= round(cos(vinkel*pi/2))*speed
-                self.rect.y-= round(sin(vinkel*pi/2))*speed
-                #lager en tilfeldig vinkel som er vekk fra objektet
-                ranvinkel=random.uniform(-pi/2+(vinkel*pi),pi/2+vinkel*pi)
-                self.vx=speed*cos(ranvinkel)
-                self.vy=speed*sin(ranvinkel)
-
-                
-
-                
-                
+               
     
     def oppdater(self):
         super().oppdater()
